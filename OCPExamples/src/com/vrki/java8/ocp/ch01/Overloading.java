@@ -1,4 +1,4 @@
-package com.vrki.java8.ocp;
+package com.vrki.java8.ocp.ch01;
 
 class Animal {
 
