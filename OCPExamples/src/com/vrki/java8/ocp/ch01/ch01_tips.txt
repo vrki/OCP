@@ -1,17 +1,17 @@
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 *** Chapter 1 - Advanced Class Design
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 ** Reviewing OCA Concepts
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 Java SE Programmer I exam  (1Z0-808) [OCA] - done!
 Java SE Programmer II exam (1Z0-809) [OCP]
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Access Modifiers
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 Careful with 'package' access:
 
@@ -33,22 +33,23 @@ If we have situation like this and try to access 'directly' to hasPaws from Lynx
 BigCat cat = new BigCat();
 System.out.println(cat.hasPaws);
 
-The reason is that we access the variable directly not through inheritance. The variable hasPows is visible only through classes via inheritance 
-or in by same package. If we access the variable 'hasPaws' through inheritance like this:
+The reason is that we access the variable directly not through inheritance. The variable hasPows is visible only through classes 
+via inheritance or in by same package. If we access the variable 'hasPaws' through inheritance like this:
 
 Lynx cat - new Lynx();
 System.out.println(cat.hasPaws);
 
 Everything will be OK! Because this is access through inheritance instead of directly through instance of BigCat class.
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Overloading and Overriding
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 Both occur only when method name is the same!
 
 Overloading:
-Method parameters must vary by the type and/or number. When multiple overloaded methods are present, Java looks for the closest match first:
+Method parameters must vary by the type and/or number. When multiple overloaded methods are present, Java looks for the closest 
+match first:
 - Exact match by type
 - Matching a superclass type
 - Converting to a larger primitive type
@@ -63,9 +64,9 @@ Occurs only when method signature is the same (method name and parameter list). 
 - If any checked exceptions are thrown, only the same exceptions or subclasses of those exceptions are allowed to be thrown.
 - The methods must not be static. (If they are the method is hidden and not overridden.)
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Abstract Classes
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 An abstract class is not required to have any methods in it, let alone any abstract ones.
 
@@ -75,11 +76,12 @@ abstract void clean();
 In abstract classes we also can have default implementation like this;
 void clean () {}
 
-The first concrete subclass of an abstract class is required to implement all abstract methods that were not implemented by a superclass.
+The first concrete subclass of an abstract class is required to implement all abstract methods that were not implemented by a 
+superclass.
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Static and Final
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 - 'final' prevents a variable from changing or a method from being overridden.
 - 'static' makes a variable shared at the class level and uses the class name to refer to a method.
@@ -88,57 +90,62 @@ The first concrete subclass of an abstract class is required to implement all ab
 
 As with methods, a class cannot be both abstract and final.
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Imports
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
-'sort()' method is a static method in a java.util.Collections package. To use it you should do static import. You can do it on either way:
+'sort()' method is a static method in a java.util.Collections package. To use it you should do static import. You can do it on 
+either way:
 import static java.util.Collections.sort; 	// You can do it like this.
 import static java.util.Collections.*; 		// Or like this.
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 ** Using instanceof
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
-In a instanceof B, the expression returns true if the reference to which a points is an instance of class B, a subclass of B (directly or 
-indirectly), or a class that implements the B interface (directly or indirectly).
+In a instanceof B, the expression returns true if the reference to which a points is an instance of class B, a subclass of B 
+(directly or indirectly), or a class that implements the B interface (directly or indirectly).
 
-All Java classes inherit from Object, which means that x instanceof Object is usually true, except for one case where it is false. If the 
-literal null or a variable reference pointing to null is used to check instanceof, the result is false. null is not an Object.
+All Java classes inherit from Object, which means that x instanceof Object is usually true, except for one case where it is 
+false. If the literal null or a variable reference pointing to null is used to check instanceof, the result is false. null is 
+not an Object.
 
-The compilation check only applies when instanceof is called on a class. When checking whether an object is an instanceof an interface, Java 
-waits until runtime to do the check. The reason is that a subclass could implement that interface and the compiler wouldn’t know it.
+The compilation check only applies when instanceof is called on a class. When checking whether an object is an instanceof an 
+interface, Java waits until runtime to do the check. The reason is that a subclass could implement that interface and the 
+compiler wouldn't know it.
 
-The instanceof operator is commonly used to determine if an instance is a subclass of a particular object before applying an explicit cast.
+The instanceof operator is commonly used to determine if an instance is a subclass of a particular object before applying an 
+explicit cast.
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Understanding Virtual Memory Invocation
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
-virtual method invocation: They are just regular non-static methods. Java looks for an overridden method rather than necessarily using the one 
-in the class that the compiler says we have.
+virtual method invocation: They are just regular non-static methods. Java looks for an overridden method rather than necessarily 
+using the one in the class that the compiler says we have.
 
 Java looked at the actual type of an object at runtime and called method on that.
 
 Instance variables don't work this way!
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 * Annotating Overridden Methods
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
-In Java, when you see code that begins with an '@' symbol, it is an annotation. An annotation is extra information about the program, and it is 
-a type of metadata. It can be used by the compiler or even at runtime.
+In Java, when you see code that begins with an '@' symbol, it is an annotation. An annotation is extra information about the 
+program, and it is a type of metadata. It can be used by the compiler or even at runtime.
 
-The @Override annotation is used to express that you, the programmer, intend for this method to override one in a superclass or implement one 
-from an interface. You don’t traditionally think of implementing an interface as overriding, but it actually is an override.
+The @Override annotation is used to express that you, the programmer, intend for this method to override one in a superclass or 
+implement one from an interface. You don't traditionally think of implementing an interface as overriding, but it actually is 
+an override.
 
-@Override is allowed only when referencing a method. Just as there is no such thing as overriding a field, the annotation cannot be used on a 
-field either.
+@Override is allowed only when referencing a method. Just as there is no such thing as overriding a field, the annotation cannot
+be used on a field either.
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 ** Coding equals, hashCode, and toString
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
 
 
-************************************************************************************************************************************************
+*********************************************************************************************************************************
 page 13
