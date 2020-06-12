@@ -1,0 +1,61 @@
+Important facts I forgot
+=================================================================================================================================
+
+- If you have one instance variable which has package access, you only benefit from it (you can access to it) if you access to it
+through inheritance. If you try to access to it directly that will be failure.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+- When multiple overloaded methods are present, Java looks for the closest match first:
+	1. Exact match by type
+	2. Matching a superclass type
+	3. Converting to a larger primitive type
+	4. Converting to an autoboxed type
+	5. Varargs
+	
+---------------------------------------------------------------------------------------------------------------------------------
+
+- Overridden methods have few rules:
+	1. The access modifier must be the same or more accessible.
+	2. The return type must be the same or a more restrictive type, also known as "covariant return" types.
+	3. If any checked exception are thrown, only the same exceptions or subclasses of those exceptions are allowed to be thrown.
+	4. The method must not be static. (If they are, the method is hidden and not overridden.)
+	5. This is not related to method but to instance variable. It cannot be "overridden". The value from the super class will 
+	always be used.
+
+- As with methods, a class cannot be both abstract and final.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+- Method 'sort()' is a static method defined in the class 'Collections' so you will need a static import to use it (you can do 
+it in two ways):
+
+import static java.util.Collections.sort;
+import static java.util.Collections.*;
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+- If the literal null or a variable reference pointing to null is used to check instanceof, the result is false. null is not an 
+Object.
+
+- The compilation check only applies when instanceof is called on a class. When checking whether an object is an instanceof an
+interface, Java waits until runtime to do the check. The reason is that a subclass could implement that interface and the 
+compiler wouldn't know it.
+
+For example, suppose that you have an interface Mother and Hippo does not implement it:
+
+public interface Mother {}
+class Hippo extends HeavyAnimal { }
+
+This code compiles:
+
+42: HeavyAnimal hippo = new Hippo();
+43: boolean b6 = hippo instanceof Mother;
+
+It so happens that Hippo does not implement Mother. The compiler allows the statement because there could later be a class such 
+as this:
+
+class MotherHippo extends Hippo implements Mother { }
+
+---------------------------------------------------------------------------------------------------------------------------------
+

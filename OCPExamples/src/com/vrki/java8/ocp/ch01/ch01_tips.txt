@@ -126,7 +126,7 @@ using the one in the class that the compiler says we have.
 
 Java looked at the actual type of an object at runtime and called method on that.
 
-Instance variables don't work this way!
+Instance variables don't work this way! (They cannot be overridden)
 
 ---------------------------------------------------------------------------------------------------------------------------------
 * Annotating Overridden Methods
@@ -141,6 +141,8 @@ an override.
 
 @Override is allowed only when referencing a method. Just as there is no such thing as overriding a field, the annotation cannot
 be used on a field either.
+
+It is great idea to get in the habit of using @Override in order to avoid accidentally overloading the method!
 
 ---------------------------------------------------------------------------------------------------------------------------------
 ** Coding equals, hashCode, and toString
