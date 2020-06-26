@@ -188,6 +188,92 @@ different result.
 ** Working with Enums
 ---------------------------------------------------------------------------------------------------------------------------------
 
+In Java, an 'enum' is a class that represents an enumeration. It is much better than a bunch of constants because it provides 
+type-safe checking.
+
+Behind the scenes, an enum is a type of class that mainly contains static members. It also includes come helper methods (name(), 
+...).
+
+'Enums' prints the name when toString() is called. They are also comparable using == because they are like static final constants.  
+
+An enum provides a method to get an array of all of the values:
+
+public enum Season {
+	WINTER, SPRING, SUMMER, FALL
+}
+
+for(Season season: Season.values()) {
+	System.out.println(season.name() + " " + season.ordinal());
+}	
+
+output:
+WINTER 0
+SPRING 1
+SUMMER 2
+FALL 3
+
+You can't comare an int and enum value directly. An enum is a type and not an int.
+
+if (Season.SUMMER == 2) {} // DOES NOT COMPILE
+
+You can also create an enum from a String. This is helpful when working with older code. The String passed in must match exactly, 
+though.
+
+Season s1 = Season.valueOf("SUMMER"); // SUMMER
+Season s2 = Season.valueOf("summer"); // exception
+
+The Exception java.lang.IllegalArgumentException will be thrown. 
+
+Another thing that you cannot do is to extend an enum:
+
+public enum ExtendedSeason extends Season { } // DOES NOT COMPILE
 
 *********************************************************************************************************************************
-page 20
+* Using Enums in Switch Statements
+*********************************************************************************************************************************
+
+Season summer = Season.SUMMER;
+
+switch (summer) {
+	case WINTER:
+		System.out.println("Get out the sled!");
+		break;
+	case SUMMER:
+		System.out.println("Time for the pool!");
+		break;
+	default:
+		System.out.println("Is it summer yet?");
+}
+
+We just typed the value of the enum rather than writing Season.WINTER. The reason is that Java already knows that the only 
+possible matches can be enum values (if you were typed case Season.WINTER, it would not compile).
+
+*********************************************************************************************************************************
+* Adding Constructors, Fields, and Methods  
+*********************************************************************************************************************************
+
+Semicolon at the end of the enum values is optional only if the only thing in the enum is that list of values.
+
+Constructor in enums is executed only once - the first time when we ask for some value (Then Java constructs all of the enum 
+values). After that, Java just returns the already-constructed enum values. Here is one of the examples:
+
+public enum OnlyOne {
+	ONCE(true);
+	
+	private OnlyOne(boolean b) {
+		System.out.println("constructing");
+	}
+	
+	public static void main(String args[] {
+		OnlyOne firstCall = OnlyOnce.ONCE;	// prints constructing
+		OnlyOne secondCall = OnlyOnce.ONCE;	// doesn't print anything
+	}
+}
+
+This technique of a constructor and state allows you to combine logic with the benefit of a list of values.
+
+*********************************************************************************************************************************
+** Creating nested classes
+*********************************************************************************************************************************
+
+page 24
