@@ -276,4 +276,218 @@ This technique of a constructor and state allows you to combine logic with the b
 ** Creating nested classes
 *********************************************************************************************************************************
 
-page 24
+A nested class is a class that is defined within another class. A nested class that is not static is called an inner class.
+
+There are four types of nested classes;
+1. A member inner class - same level as instance variables, not static.
+2. A local inner class - defined within a method.
+3. An anonymous inner class - special case of local inner class without a name.
+4. A static nested class - static inner class defined at the same level as static variables.
+
+Benefits of using inner classes:
+- Encapsulate  helper classes by restricting them to the containing class.
+- Make it easy to create a class which will be used in only one place.
+- Make the code easier to read.
+- Make the code harder to read when used improperly.
+
+*********************************************************************************************************************************
+** Member Inner Classes
+*********************************************************************************************************************************
+
+- defined at the member level of a class (same level as the methods, instance variables and constructors).
+
+Properties:
+- can be declared as public, protected, private or default (access)
+- can extend any class or interface
+- can be abstract or final
+- can access members of the outer class including private members
+- cannot declare static fields or methods
+
+Since a member inner class is not static, it has to be used with an instance of the outer class.
+
+There is another way to instantiate Inner class:
+
+public static void main(String args[]) {
+	Outer outer = new Outer();
+	Inner inner = outer.new Inner();	//  create the inner class
+	inner.go();
+}
+
+We need an instance of Outer in order to create Inner. We can't just call new Inner() because Java won't know with which instance 
+of Outer it is associated. Java solved this by calling new as if it were a method on the outer variable.
+
+Inner classes can have the same variable names as outer classes. There is a special way of calling 'this' to say which class you
+want to access. You also aren't limited to just one inner class.
+
+public class A {
+	private int x = 10;
+	
+	class B {
+		private int x = 20;
+
+	class C {
+		private int x = 30;
+
+		public void allTheX() {
+			System.out.println(x); // 30
+			System.out.println(this.x); // 30
+			System.out.println(B.this.x); // 20
+			System.out.println(A.this.x); // 10 
+		}
+	}	 
+}
+
+public static void main(String[] args) {
+	A a = new A();
+	A.B b = a.new B();
+	A.B.C c = b.new C();
+	c.allTheX();
+	}
+}
+
+Private interfaces;
+
+public class CaseOfThePrivateInterface {
+
+	private interface Secret {
+		public void shh();
+	}
+	
+	class DontTell implements Secret {
+		public void shh() { }
+	}
+}
+
+The rule that all methods in an interface are public still applies. A class that implements the interface must define that method
+as public.
+The interface itself does not have to be public, though. Just like any inner class, an inner interface can be private. This means
+that the interface can only be referred to within the current outer class.
+
+*********************************************************************************************************************************
+** Local Inner Classes
+*********************************************************************************************************************************
+ 
+A local inner class  is a nested class defined within a method.
+This method can return an instance of the local inner class.
+
+Properties:
+- They do not have an access specifier.
+- They cannot be declared static and cannot declare static fields or methods.
+- They have access to all fields and methods of the enclosing class.
+- They do not have access to local variables of a method unless those variables are final or effectively final.
+
+The compiler is generating a class file from your inner class. A separate class has no way to refer to a local variables. If the 
+local variable is final, Java can handle it by passing it to the constructor of the inner class or by storing it in the class 
+file. If it weren't effectively final, these tricks wouldn't work because the value could change after the copy was made. Up 
+until Java 7, the programmer actually had to type the final keyword. In Java 8, the "effectively final" concept was introduced.
+If the code can still compile with the keyword final inserted before the local variable, the variable is effectively final.
+
+*********************************************************************************************************************************
+** Anonymous Inner Classes
+*********************************************************************************************************************************
+
+An anonymous inner class is a local inner class that does not have a name.
+It is declared and instantiated all in one statement using the new keyword.
+Anonymous inner classes are required to extend an existing class or implement an existing interface. 
+They are useful when you have a short implementation that will not be used anywhere else.
+
+Example:
+
+public class AnonInner {
+	abstract class SaleTodayOnly {
+		abstract int dollarsOff();
+	}
+
+	public int admission(int basePrice) {
+		SaleTodayOnly sale = new SaleTodayOnly() {
+			int dollarsOff() { return 3; }
+		};
+		
+		return basePrice - sale.dollarsOff();
+	}
+}
+
+Notice how this inner class does not have a name. The code says to instantiate a new SaleTodayOnly object. But wait. 
+SaleTodayOnly is abstract. This is OK because we provide the class body right there - anonymously.
+Pay special attention to semicolon at the end of that class body. We are declaring a local variable on these lines. 
+Local variable declarations are required to end with semicolons, just like other Java statements - even if they are
+long and happen to contain an anonymous inner class.
+
+Remember that an anonymous inner class is just an unnamed local inner class.
+
+There is one more thing that you can do with anonymous inner classes. You can define them right where they are needed, even if
+that is an argument to another method:
+
+public class AnonInner {
+	interface SaleTodayOnly {
+		int dollarsOff();
+	}
+
+	public int pay() {
+		return admission(5, new SaleTodayOnly() { 
+			dollarsOff() { return 3; }
+		});
+	}
+	
+	public int admission(int basePrice, SaleTodayOnly sale) {
+		return basePrice - sale.dollarsOff();
+	}
+}
+
+*********************************************************************************************************************************
+** Static Nested Classes
+*********************************************************************************************************************************
+
+A static nested class is a static class defined at the member level. 
+It can be instantiated without an object of the enclosing class, so it can’t access the instance variables without an explicit 
+object of the enclosing class. For example, new OuterClass().var allows access to the instance variable var.
+
+In other words, it is like a regular class except for the following:
+- The nesting creates a namespace because the enclosing class name must be used to refer to it.
+- It can be made private or use one of the other access modifiers to encapsulate it.
+- The enclosing class can refer to the fields and methods of the static nested class.
+
+public class Enclosing {
+	static class Nested {
+		private int price = 6;
+	}
+	
+	public static void main(String[] args) {
+		Nested nested = new Nested();
+		System.out.println(nested.price);
+	}
+}
+
+Since the class is static, you do not need an instance of Enclosing in order to use it. You are allowed to access private instance
+variables.
+
+Importing a static Nested Class:
+
+You can import it using regular import:
+
+package bird;
+public class Toucan {
+	public static class Beak {}
+}
+
+package watcher;
+import bird.Toucan.Beak;	// regular import OK
+public class BirdWatcher {
+	Beak beak;
+}
+
+
+And since it is static, alternatively you can use a static import:
+
+import static bird.Toucan.Beak;
+
+Either one will compile. Java treats the static nested class as if it were a namespace.
+
+  
+
+page 36
+
+TODO:
+- investigate some more about hashCode() method
+- find some additional info about "effectively final" concept for Local Inner Classes from other sources.
+ 
