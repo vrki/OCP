@@ -490,4 +490,6 @@ page 36
 TODO:
 - investigate some more about hashCode() method
 - find some additional info about "effectively final" concept for Local Inner Classes from other sources.
+- what is an advantage using nested static class instead of 'normal' static class?
+
  
