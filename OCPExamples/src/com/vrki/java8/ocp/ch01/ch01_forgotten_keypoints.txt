@@ -59,3 +59,16 @@ class MotherHippo extends Hippo implements Mother { }
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
+ClassCastException is a runtime exception and therefore does not need to be handled or declared.
+
+It is also a bad idea for the hash code to contain values that could change.
+
+Inner classes are not allowed to contain static methods or static variables. Only nested static classes are permitted to contain
+statics.
+
+Runnable is an interface.
+
+An equals() method should have a null check and an instanceof check.
+
+Enums are not allowed to have a public constructor.
+
