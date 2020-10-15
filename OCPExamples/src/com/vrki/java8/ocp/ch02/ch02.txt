@@ -80,3 +80,30 @@ public class Tiger implements Sprint {
 In this example, the Sprint class is a functional interface, because it contains exactly one abstract method, and the Tiger class
 is a valid class that implements the interface.
 
+Lambda expressions rely on the notion of deferred execution. Deferred execution means that code is specified now but runs later.
+Even though the execution is deferred, the compiler will still validate that the code syntax is properly formed.
+
+---------------------------------------------------------------------------------------------------------------------------------
+** Understanding Lambda Syntax
+---------------------------------------------------------------------------------------------------------------------------------
+
+The left side of the arrow operator -> indicates the input parameters for the lambda expression.
+The right side is referred to as the body of the lambda expression.
+
+As mentioned, the data types for the input parameters of a lambda expression are optional. When one parameter has a data type 
+listed, though, all parameters must provide a data type.
+
+There is one more issue you might see with lambdas. We’ve been defining an argument list in our lambda expressions. Since Java
+doesn’t allow us to re-declare a local variable, the following is an issue:
+
+(a, b) -> { int a = 0; return 5;} // DOES NOT COMPILE
+
+We tried to re-declare a, which is not allowed. By contrast, the following line is permitted because it uses a different variable
+name:
+
+(a, b) -> { int c = 0; return 5;}
+
+---------------------------------------------------------------------------------------------------------------------------------
+** Applying the Predicate Interface
+---------------------------------------------------------------------------------------------------------------------------------
+page: 60
