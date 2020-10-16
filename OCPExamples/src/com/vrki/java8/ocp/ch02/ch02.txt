@@ -106,4 +106,35 @@ name:
 ---------------------------------------------------------------------------------------------------------------------------------
 ** Applying the Predicate Interface
 ---------------------------------------------------------------------------------------------------------------------------------
-page: 60
+It’s in the package java.util.function:
+
+public interface Predicate<T> {
+	public boolean test(T t);
+}
+
+
+The result of using Predicate is that we no longer need our own functional interface. The following is a rewrite of our program
+to use the Predicate class:
+
+import java.util.function.Predicate;
+
+public class FindMatchingAnimals {
+	private static void print(Animal animal, Predicate<Animal> trait) {
+	if(trait.test(animal))
+		System.out.println(animal);
+	}
+
+	public static void main(String[] args) {
+		print(new Animal("fish", false, true), a -> a.canHop());
+		print(new Animal("kangaroo", true, false), a -> a.canHop());
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------------------
+** Implementing Polymorphism
+---------------------------------------------------------------------------------------------------------------------------------
+
+Polymorphism is the ability of a single interface to support multiple underlying forms. In Java, this allows multiple types of 
+objects to be passed to a single method or class.
+
+
