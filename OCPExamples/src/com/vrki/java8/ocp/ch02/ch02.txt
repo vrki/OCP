@@ -137,4 +137,128 @@ public class FindMatchingAnimals {
 Polymorphism is the ability of a single interface to support multiple underlying forms. In Java, this allows multiple types of 
 objects to be passed to a single method or class.
 
+Polymorphism also allows one object to take on many different forms. As you may remember from studying for the OCA exam, a Java
+object may be accessed using a reference with the same type as the object, a reference that is a superclass of the object, or
+a reference that defines an interface that the object implements, either directly or through a superclass. Furthermore, a cast
+is not required if the object is being reassigned to a supertype or interface of the object.
+
+If you use a variable to refer to an object, then only the methods or variables that are part of the variable’s reference type
+can be called without an explicit cast.
+
+---------------------------------------------------------------------------------------------------------------------------------
+** Distinguishing between an Object and a Reference
+---------------------------------------------------------------------------------------------------------------------------------
+
+In Java, all objects are accessed by reference, so as a developer you never have direct access to the memory of the object 
+itself. Conceptually, though, you should consider the object as the entity that exists in memory, allocated by the Java runtime
+environment. Regardless of the type of the reference that you have for the object in memory, the object itself doesn’t change.
+
+For example, since all objects inherit java.lang.Object, they can all be reassigned to java.lang.Object:
+
+Lemur lemur = new Lemur();
+Object lemurAsObject = lemur;
+
+Even though the Lemur object has been assigned a reference with a different type, the object itself has not changed and still
+exists as a Lemur object in memory. What has changed, then, is our ability to access methods within the Lemur class with the 
+lemurAsObject reference. Without an explicit cast back to Lemur, as you’ll see in the next section, we no longer have access to
+the Lemur properties of the object.
+
+Two rules:
+1. The type of the object determines which properties exist within the object in memory.
+2. The type of the reference to the object determines which methods and variables are accessible to the Java program.
+
+---------------------------------------------------------------------------------------------------------------------------------
+** Casting Object References
+---------------------------------------------------------------------------------------------------------------------------------
+
+Once we changed the reference type, though, we lost access to more specific methods defined in the subclass that still exists
+within the object. We can reclaim those references by casting the object back to the specific subclass it came from:
+
+Primate primate = lemur;
+Lemur lemur2 = primate; // DOES NOT COMPILE
+Lemur lemur3 = (Lemur)primate;
+System.out.println(lemur3.age);
+
+Here are some basic rules to keep in mind when casting variables:
+1. Casting an object from a subclass to a superclass doesn’t require an explicit cast.
+2. Casting an object from a superclass to a subclass requires an explicit cast.
+3. The compiler will not allow casts to unrelated types.
+4. Even when the code compiles without issue, an exception may be thrown at runtime if the object being cast is not actually an
+instance of that class.
+
+public class Bird {}
+public class Fish {
+	public static void main(String[] args) {
+	Fish fish = new Fish();
+	Bird bird = (Fish)bird; // DOES NOT COMPILE
+	}
+}
+
+In this example, the classes Fish and Bird are not related through any class hierarchy; therefore, the code will not compile.
+
+Casting is not without its limitations. Even though two classes share a related hierarchy, that doesn’t mean an instance of 
+one can automatically be cast to another. Here’s an example:
+
+public class Rodent {
+}
+public class Capybara extends Rodent {
+	public static void main(String[] args) {
+		Rodent rodent = new Rodent();
+		Capybara capybara = (Capybara)rodent; // Throws ClassCastException at runtime
+	}
+}
+
+This code creates an instance of Rodent and then tries to cast it to a subclass of Rodent, Capybara. Although this code will
+compile without issue, it will throw a ClassCastException at runtime since the object being referenced is not an instance of the
+Capybara class. As you may recall from Chapter 1, you can use the instanceof operator prior to casting the object to avoid 
+throwing ClassCastException at runtime:
+
+if(rodent instanceof Capybara) {
+	Capybara capybara = (Capybara)rodent;
+}
+
+---------------------------------------------------------------------------------------------------------------------------------
+* Understanding Design Principles
+---------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------
+* Encapsulating Data
+---------------------------------------------------------------------------------------------------------------------------------
+
+In software development, encapsulation is the idea of combining fields and methods in a class such that the methods operate on 
+the data, as opposed to the users of the class accessing the fields directly.
+
+The underlying idea of encapsulation is that no actor other than the class itself should have direct access to its data. The 
+class is said to encapsulate the data it contains and prevent anyone from directly accessing it.
+
+With encapsulation, a class is able to maintain certain invariants about its internal data. An invariant is a property or truth
+that is maintained even after the data is modified. For example, imagine that we are designing a new Animal class, and we have 
+the following design requirements:
+- Each animal has a non-null , non-empty species field
+- Each animal has an age field that is greater than or equal to zero
+
+The goal of designing our Animal class would be to make sure that we never arrive at an instance of Animal that violates one of
+these properties. By using private instance members along with getter and setter methods that validate the input data, we can 
+ensure that these invariants remain true.
+
+---------------------------------------------------------------------------------------------------------------------------------
+* Creating JavaBeans
+---------------------------------------------------------------------------------------------------------------------------------
+
+JavaBean naming conventions:
+- Properties are private.
+- Getter for non-boolean properties begins with 'get'.
+- Getters for boolean properties may begin with 'is' or 'get'.
+- Setter methods begin with 'set'.
+- The method name must have a prefix of set/get/is followed by the first letter of the property in uppercase and followed by the
+rest of the property name.
+
+Which of the following could be correctly included in a JavaBean?
+public boolean isPlaying() { return playing; }
+public boolean getPlaying() { return playing; }
+public Boolean isDancing() { return dancing; }
+
+The first line is correct because it defines a proper getter for a boolean variable.
+The second example is also correct, since boolean may use is or get. 
+The third line is incorrect, because a Boolean wrapper should start with get, since it is an object.
 
