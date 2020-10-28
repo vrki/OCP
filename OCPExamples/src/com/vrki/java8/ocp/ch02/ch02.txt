@@ -262,3 +262,56 @@ The first line is correct because it defines a proper getter for a boolean varia
 The second example is also correct, since boolean may use is or get. 
 The third line is incorrect, because a Boolean wrapper should start with get, since it is an object.
 
+---------------------------------------------------------------------------------------------------------------------------------
+* Applying the Is-a Relationship
+---------------------------------------------------------------------------------------------------------------------------------
+
+The is-a relationship is also known as the inheritance test.
+
+The fundamental result of the is-a principle is that if A is-a B, then any instance of A can be treated like an instance of B. 
+This holds true for a child that is a subclass of any parent, be it a direct subclass or a distant child. As we discussed with
+polymorphism, objects can take many different forms.
+
+When constructing an inheritance-based data model, it is important to apply the is-a relationship regularly, so that you are 
+designing classes that conceptually make sense.
+
+The is-a relationship test helps us avoid creating object models that contain contradictions. One solution in this example is to
+not combine Tiger and Pet in the same model, preferring to write duplicate code rather than create inconsistent data. Another
+solution might be to use the multi-inheritance properties of interfaces and declare Pet an interface rather than a parent class.
+
+---------------------------------------------------------------------------------------------------------------------------------
+* Applying the Has-a Relationship
+---------------------------------------------------------------------------------------------------------------------------------
+
+In object-oriented design, we often want to test whether an object contains a particular property or value. We refer to the has-a
+relationship as the property of an object having a named data object or primitive as a member. The has-a relationship is also 
+known as the object composition test, described in the next section.
+
+Inheritance goes one step further by allowing us to say that any child of Bird must also have a Beak. More generally, if a parent
+has-a object as a protected or public member, then any child of the parent must also have that object as a member. Note that this
+does not hold true for private members defined in parent classes, because private members are not inherited in Java.
+
+---------------------------------------------------------------------------------------------------------------------------------
+* Composing Objects
+---------------------------------------------------------------------------------------------------------------------------------
+
+In object-oriented design, we refer to object composition as the property of constructing a class using references to other 
+classes in order to reuse the functionality of the other classes. In particular, the class contains the other classes in the
+has-a sense and may delegate methods to the other classes.
+
+Object composition should be thought of as an alternate to inheritance and is often used to simulate polymorphic behavior that 
+cannot be achieved via single inheritance.
+
+One of the advantages of object composition over inheritance is that it tends to promote greater code reuse. By using object
+composition, you gain access to other classes and methods that would be difficult to obtain via Java’s single-inheritance model.
+
+Object composition may seem more attractive than inheritance because of its reusable nature, but bear in mind that one of the 
+strengths of Java is its powerful inheritance model. Object composition still requires you to explicitly expose the underlying 
+methods and values manually, whereas inheritance includes protected and public members automatically. Also, using method 
+overloading to determine dynamically which method to select at runtime is an extremely powerful tool for building intelligent 
+classes. In other words, both object composition and inheritance have their proper place in developing good code, and in many 
+cases it may be difficult to decide which path to choose.
+
+
+
+Page: 75
